@@ -61,10 +61,11 @@ endif
 
         PATH_TO_WLAN_CHR_DRV = vendor/mediatek/kernel_modules/connectivity/wlan/adaptor
         PATH_TO_WLAN_DRV     = vendor/mediatek/kernel_modules/connectivity/wlan/core/gen4m
+	$(shell ln -s $(srctree)/vendor $(srctree)/..)
 
-        ABS_PATH_TO_WMT_DRV      = $(srctree)/$(PATH_TO_WMT_DRV)
-        ABS_PATH_TO_WLAN_CHR_DRV = $(srctree)/$(PATH_TO_WLAN_CHR_DRV)
-        ABS_PATH_TO_WLAN_DRV     = $(srctree)/$(PATH_TO_WLAN_DRV)
+        ABS_PATH_TO_WMT_DRV      = $(srctree)/../$(PATH_TO_WMT_DRV)
+        ABS_PATH_TO_WLAN_CHR_DRV = $(srctree)/../$(PATH_TO_WLAN_CHR_DRV)
+        ABS_PATH_TO_WLAN_DRV     = $(srctree)/../$(PATH_TO_WLAN_DRV)
 
         # check wlan driver folder
         ifeq (,$(wildcard $(ABS_PATH_TO_WMT_DRV)))
@@ -81,13 +82,14 @@ endif
         $(warning symbolic link to $(PATH_TO_WLAN_CHR_DRV))
         $(warning symbolic link to $(PATH_TO_WLAN_DRV))
 
-        $(shell unlink $(srctree)/$(src)/wmt_drv)
-        $(shell unlink $(srctree)/$(src)/wmt_chrdev_wifi)
-        $(shell unlink $(srctree)/$(src)/wlan_drv_gen4m)
+        $(shell rm -r $(srctree)/$(src)/wmt_drv)
+        $(shell rm -r $(srctree)/$(src)/wmt_chrdev_wifi)
+        $(shell rm -r $(srctree)/$(src)/wlan_drv_gen4m)
 
         $(shell ln -s $(ABS_PATH_TO_WMT_DRV)      $(srctree)/$(src)/wmt_drv)
         $(shell ln -s $(ABS_PATH_TO_WLAN_CHR_DRV) $(srctree)/$(src)/wmt_chrdev_wifi)
         $(shell ln -s $(ABS_PATH_TO_WLAN_DRV)     $(srctree)/$(src)/wlan_drv_gen4m)
+        
 
         # for gen4m options
         export CONFIG_MTK_COMBO_WIFI_HIF=axi
