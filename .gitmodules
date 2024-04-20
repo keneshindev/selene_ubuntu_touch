@@ -1,4 +1,0 @@
-[submodule "sus"]
-	path = vendor/mediatek/kernel_modules
-	url = https://github.com/MiCode/MTK_kernel_modules
-	branch = selene-r-oss
